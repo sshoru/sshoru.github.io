@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Ensure we're in play mode
     document.body.classList.remove('work-mode');
     document.body.classList.add('play-mode');
-    
+
     // No mode switching on these pages - they're already in play mode
 
     // Add hover effects to art items
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'translateY(-5px)';
             this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
         });
-        
+
         item.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0)';
             this.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';

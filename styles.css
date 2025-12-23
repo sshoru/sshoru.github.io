@@ -13,28 +13,36 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Dark Mode Colors */
-body.work-mode {
-    --primary-color: #3b82f6;
-    --secondary-color: #1d4ed8;
-    --accent-color: #60a5fa;
-    --text-color: #f1f5f9;
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
-    --border-color: #334155;
-    --hover-color: #334155;
+a {
+    color: #6f8fd1;
 }
 
-/* Play Mode Colors - Dark Green Theme */
+h1, h2, h3, h4, h5, h6 {
+    text-shadow: none;
+}
+
+/* Work Mode Colors */
+body.work-mode {
+    --primary-color: #ffffff;
+    --secondary-color: #f5f5f0;
+    --accent-color: #e8e8e0;
+    --text-color: #e8e8e8;
+    --bg-color: #1a1a1c;
+    --card-bg: #252527;
+    --border-color: #3a3a3c;
+    --hover-color: #3a3a3c;
+}
+
+/* Play Mode Colors */
 body.play-mode {
-    --primary-color: #10b981;
-    --secondary-color: #059669;
-    --accent-color: #34d399;
-    --text-color: #f1f5f9;
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
-    --border-color: #334155;
-    --hover-color: #334155;
+    --primary-color: #ffcceb;
+    --secondary-color: #ffb3e0;
+    --accent-color: #ff99d5;
+    --text-color: #ffcceb;
+    --bg-color: #1a1a1c;
+    --card-bg: #252527;
+    --border-color: #3a3a3c;
+    --hover-color: #3a3a3c;
 }
 
 /* Header */
@@ -95,7 +103,7 @@ body.play-mode {
     border: none;
     border-radius: 16px;
     background: transparent;
-    color: var(--text-color);
+    color: #888888;
     font-weight: 500;
     font-size: 0.85rem;
     cursor: pointer;
@@ -106,11 +114,11 @@ body.play-mode {
 }
 
 .mode-btn.active {
-    color: white;
+    color: #2a2a2c;
 }
 
 .mode-btn:hover:not(.active) {
-    color: var(--text-color);
+    color: #999999;
 }
 
 /* Social Links */
@@ -203,7 +211,7 @@ body.play-mode {
 .section h2 {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--primary-color);
     margin-bottom: 2rem;
     text-align: center;
 }
@@ -391,6 +399,46 @@ body.play-mode {
     left: 0;
 }
 
+/* Publications Section */
+.publications-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.publications-section h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.publication-item {
+    padding: 1rem 0;
+}
+
+.publication-item h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.publication-item .authors {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin-bottom: 0.3rem;
+}
+
+.publication-item .venue {
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    font-style: italic;
+}
+
 /* Problem Solving */
 .achievements {
     background: var(--card-bg);
@@ -519,6 +567,10 @@ body.play-mode {
     background: var(--hover-color);
     border-radius: 6px;
     font-weight: 500;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .problems-grid {
@@ -543,13 +595,17 @@ body.play-mode {
 }
 
 .problem-item h4 a {
-    color: var(--primary-color);
+    color: #b3d1ff;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .problem-item h4 a:hover {
-    color: var(--accent-color);
+    color: #99c2ff;
+}
+
+.problem-item:has(a) p {
+    color: #b3d1ff;
 }
 
 /* Presentations */
@@ -575,13 +631,17 @@ body.play-mode {
 }
 
 .presentation-item h3 a {
-    color: var(--primary-color);
+    color: #b3d1ff;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .presentation-item h3 a:hover {
-    color: var(--accent-color);
+    color: #99c2ff;
+}
+
+.presentation-item:has(a) p {
+    color: #b3d1ff;
 }
 
 /* Placeholder Content */
@@ -892,13 +952,9 @@ body.play-mode {
 }
 
 .art-gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    column-count: 4;
+    column-gap: 1.5rem;
     margin-top: 2rem;
-    max-width: 500px;
-    margin-left: 0;
-    margin-right: auto;
     width: 100%;
 }
 
@@ -910,6 +966,15 @@ body.play-mode {
     transition: all 0.3s ease;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+    cursor: pointer;
+}
+
+.art-item a {
+    display: block;
+    text-decoration: none;
 }
 
 .art-item:hover {
@@ -936,13 +1001,60 @@ body.play-mode {
 }
 
 .art-description {
-    padding: 1.5rem;
+    display: none;
+}
+
+/* Art Detail Page */
+.art-detail {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.back-link:hover {
+    transform: translateX(-5px);
+}
+
+.art-detail h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
     text-align: center;
 }
 
-.art-description h3 {
-    font-size: 1.2rem;
-    color: var(--primary-color);
+.art-detail-image {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.art-detail-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.art-detail-description {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.art-detail-description p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color);
     margin: 0;
 }
 
@@ -1045,6 +1157,25 @@ body.play-mode {
     border-top: 1px solid var(--border-color);
 }
 
+.writeup-comments {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.writeup-comments h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.writeup-comments p {
+    color: var(--text-color);
+    line-height: 1.8;
+}
+
 .writeup-card-footer {
     padding: 0 1.5rem 1.5rem 1.5rem;
     border-top: 1px solid var(--border-color);
@@ -1119,8 +1250,13 @@ body.play-mode {
     }
     
     .art-gallery {
-        gap: 2rem;
+        column-count: 2;
+        column-gap: 1rem;
         padding: 0 1rem;
+    }
+
+    .art-item {
+        margin-bottom: 1rem;
     }
     
     .writeups-header h1 {
