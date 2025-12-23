@@ -14,12 +14,15 @@
 
         <!-- Set the background colour of the document -->
         <style>
-            body {
+            html, body {
               background: #0;
               color:#cccccc;
               margin: 0px;
               padding: 0px;
               border: 0px;
+              overflow: hidden;
+              width: 100%;
+              height: 100%;
             }
             canvas {
                       image-rendering: optimizeSpeed;
@@ -28,6 +31,9 @@
                       margin: 0px;
                       padding: 0px;
                       border: 0px;
+                      max-width: 100%;
+                      max-height: 100%;
+                      object-fit: contain;
             }
             :-webkit-full-screen #canvas {
                  width: 100%;
@@ -38,6 +44,11 @@
               margin: 0px;
               padding: 0px;
               border: 0px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              height: 100%;
             }
             /* START - Login Dialog Box */
             div.gm4html5_login

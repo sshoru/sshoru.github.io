@@ -8,15 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const playContent = document.getElementById('playContent');
     const body = document.body;
 
-    // Initialize in work mode
-    body.classList.add('work-mode');
+    // Don't initialize mode yet - wait for hash check at the end
 
     // Work mode button click
     workModeBtn.addEventListener('click', function() {
         // Update button states
         workModeBtn.classList.add('active');
         playModeBtn.classList.remove('active');
-        
+
         // Update navigation
         if (workNav) {
             workNav.classList.add('active');
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (playNav) {
             playNav.classList.remove('active');
         }
-        
+
         // Update content
         if (workContent) {
             workContent.classList.add('active');
@@ -32,17 +31,21 @@ document.addEventListener('DOMContentLoaded', function() {
         if (playContent) {
             playContent.classList.remove('active');
         }
-        
+
         // Update body class for styling
         body.classList.remove('play-mode');
         body.classList.add('work-mode');
-        
+
         // Update toggle class
         document.querySelector('.mode-toggle').classList.remove('play-mode');
-        
+
+        // Store mode preference
+        localStorage.setItem('mode', 'work');
+
         // Update URL without page reload (only on main page)
-        if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/')) {
-            history.pushState({mode: 'work'}, '', '#work');
+        const pathname = window.location.pathname;
+        if (pathname === '/' || pathname === '/index.html' || pathname.endsWith('/index.html') || pathname.endsWith('/')) {
+            history.replaceState({mode: 'work'}, '', '#work');
         }
     });
 
@@ -51,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update button states
         playModeBtn.classList.add('active');
         workModeBtn.classList.remove('active');
-        
+
         // Update navigation
         if (playNav) {
             playNav.classList.add('active');
@@ -59,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (workNav) {
             workNav.classList.remove('active');
         }
-        
+
         // Update content
         if (playContent) {
             playContent.classList.add('active');
@@ -67,23 +70,36 @@ document.addEventListener('DOMContentLoaded', function() {
         if (workContent) {
             workContent.classList.remove('active');
         }
-        
+
         // Update body class for styling
         body.classList.remove('work-mode');
         body.classList.add('play-mode');
-        
+
         // Update toggle class
         document.querySelector('.mode-toggle').classList.add('play-mode');
-        
-            // Update URL without page reload (only on main page)
-            if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/')) {
-                history.pushState({mode: 'play'}, '', '#play');
-            }
+
+        // Store mode preference
+        localStorage.setItem('mode', 'play');
+
+        // Update URL without page reload (only on main page)
+        const pathname = window.location.pathname;
+        if (pathname === '/' || pathname === '/index.html' || pathname.endsWith('/index.html') || pathname.endsWith('/')) {
+            history.replaceState({mode: 'play'}, '', '#play');
+        }
     });
 
     // Handle browser back/forward buttons
     window.addEventListener('popstate', function(event) {
+        // Check state first, then hash, then localStorage
         if (event.state && event.state.mode === 'play') {
+            playModeBtn.click();
+        } else if (event.state && event.state.mode === 'work') {
+            workModeBtn.click();
+        } else if (window.location.hash === '#play') {
+            playModeBtn.click();
+        } else if (window.location.hash === '#work') {
+            workModeBtn.click();
+        } else if (localStorage.getItem('mode') === 'play') {
             playModeBtn.click();
         } else {
             workModeBtn.click();
@@ -198,10 +214,43 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 
-    // Initialize the page based on URL hash
-    if (window.location.hash === '#play') {
-        playModeBtn.click();
+    // Initialize the page based on URL hash or stored preference
+    // Priority: 1) URL hash, 2) localStorage, 3) default to work mode
+    const urlHash = window.location.hash;
+    const storedMode = localStorage.getItem('mode');
+    const shouldStartInPlayMode = urlHash === '#play' || (urlHash !== '#work' && storedMode === 'play');
+
+    if (shouldStartInPlayMode) {
+        // Start in play mode
+        playModeBtn.classList.add('active');
+        workModeBtn.classList.remove('active');
+        if (playNav) playNav.classList.add('active');
+        if (workNav) workNav.classList.remove('active');
+        if (playContent) playContent.classList.add('active');
+        if (workContent) workContent.classList.remove('active');
+        body.classList.remove('work-mode');
+        body.classList.add('play-mode');
+        document.querySelector('.mode-toggle').classList.add('play-mode');
+        localStorage.setItem('mode', 'play');
+        // Update hash if not already set
+        if (urlHash !== '#play') {
+            history.replaceState({mode: 'play'}, '', '#play');
+        }
     } else {
-        workModeBtn.click();
+        // Start in work mode
+        workModeBtn.classList.add('active');
+        playModeBtn.classList.remove('active');
+        if (workNav) workNav.classList.add('active');
+        if (playNav) playNav.classList.remove('active');
+        if (workContent) workContent.classList.add('active');
+        if (playContent) playContent.classList.remove('active');
+        body.classList.remove('play-mode');
+        body.classList.add('work-mode');
+        document.querySelector('.mode-toggle').classList.remove('play-mode');
+        localStorage.setItem('mode', 'work');
+        // Update hash if not already set
+        if (urlHash !== '#work') {
+            history.replaceState({mode: 'work'}, '', '#work');
+        }
     }
 }); 
