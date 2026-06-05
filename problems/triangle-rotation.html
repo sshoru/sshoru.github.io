@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangle Rotation - Problem Archive</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../script.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Akhoury Shauryam</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html">Home</a>
+            <a href="../experience.html">Experience</a>
+            <a href="../research.html">Research</a>
+            <a href="../problems.html" class="active">Problem Archive</a>
+            <a href="../more.html">More</a>
+        </nav>
+        <div class="sidebar-foot">
+            <div class="social">
+                <a href="https://github.com/Satan-Claws" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/akhoury-shauryam-a87195221/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <button class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span class="label">Dark mode</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="backdrop"></div>
+
+    <main class="main">
+        <header class="topbar">
+            <h1>Triangle Rotation</h1>
+            <button class="nav-toggle" type="button" aria-label="Open menu">☰</button>
+        </header>
+
+        <div class="container">
+            <a href="../problems.html" class="back-link">← Back</a>
+
+                <div class="problem-header">
+                    <h1>Triangle Rotation</h1></div>
+                
+                <div class="problem-content">
+                    <p>Start with an equilateral triangle $\Delta_1$ of unit side length. Given a function $f(n)$, build $\Delta_{n+1}$ from $\Delta_n$ as follows: extend each side of $\Delta_n$ clockwise until its new length is $f(n)$ times the original, then join the three new endpoints to form $\Delta_{n+1}$.</p>
+
+                    <p>The animation below shows the construction for the constant $f(x) = 2$:</p>
+
+                    <div class="problem-image">
+                        <img src="../assets/images/rotate.gif" alt="Animation of the triangle-rotation construction">
+                    </div>
+
+                    <p>So the blue triangle is $\Delta_n$, the red one is $\Delta_{n+1}$, and the ratio $\tfrac{\text{blue} + \text{orange}}{\text{blue}} = f(n)$ determines how far each side gets extended.</p>
+
+                    <p>Now take</p>
+
+                    <p>$$f(n) = \frac{2\sqrt{3}\,n^{2} - 1}{2\sqrt{3}\,n^{2} - 3}.$$</p>
+
+                    <p>What is the total angle (in radians) by which $\Delta_n$ has rotated, relative to $\Delta_1$, as $n \to \infty$?</p>
+                </div>
+
+                <details class="problem-solution">
+                    <summary>Solution</summary>
+                    <div class="problem-solution-body">
+                        <p>Let $\theta_n$ be the rotation angle at step $n$. Applying the sine rule to the small "extension" triangle formed by one side of $\Delta_n$, the corresponding side of $\Delta_{n+1}$, and the extended segment gives</p>
+
+                        <p>$$\frac{f(n)}{f(n) - 1} = \frac{\sin(60^\circ - \theta_n)}{\sin \theta_n}.$$</p>
+
+                        <p>Plugging in the given $f(n)$, the left side simplifies to $\tfrac{2\sqrt{3} n^{2} - 1}{2}$, while the right side simplifies (via $\tfrac{\sin(A-B)}{\sin A \sin B} = \cot B - \cot A$) to $\tfrac{\sqrt{3}}{2} \cot \theta_n - \tfrac{1}{2}$. Equating gives $\cot \theta_n = 2 n^{2}$, so $\theta_n = \arctan\!\left(\tfrac{1}{2 n^{2}}\right)$.</p>
+
+                        <p>The total rotation is</p>
+
+                        <p>$$\sum_{n=1}^{\infty} \arctan\!\left(\frac{1}{2 n^{2}}\right) = \sum_{n=1}^{\infty} \arctan\!\left(\frac{(2n+1) - (2n-1)}{1 + (2n+1)(2n-1)}\right),$$</p>
+
+                        <p>which telescopes to $\arctan(\infty) - \arctan(1) = \tfrac{\pi}{2} - \tfrac{\pi}{4} = \tfrac{\pi}{4}$.</p>
+
+                        <p class="answer">Answer: <strong>$\dfrac{\pi}{4} \approx 0.7854$</strong></p>
+                    </div>
+                    <div class="problem-notes">
+                        <h4>Notes</h4>
+                        <p>—</p>
+                    </div>
+                </details>
+        </div>
+    </main>
+</div>
+</body>
+</html>

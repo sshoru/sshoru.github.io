@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tan Limit - Problem Archive</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../script.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Akhoury Shauryam</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html">Home</a>
+            <a href="../experience.html">Experience</a>
+            <a href="../research.html">Research</a>
+            <a href="../problems.html" class="active">Problem Archive</a>
+            <a href="../more.html">More</a>
+        </nav>
+        <div class="sidebar-foot">
+            <div class="social">
+                <a href="https://github.com/Satan-Claws" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/akhoury-shauryam-a87195221/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <button class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span class="label">Dark mode</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="backdrop"></div>
+
+    <main class="main">
+        <header class="topbar">
+            <h1>Tan Limit</h1>
+            <button class="nav-toggle" type="button" aria-label="Open menu">☰</button>
+        </header>
+
+        <div class="container">
+            <a href="../problems.html" class="back-link">← Back</a>
+
+                <div class="problem-header">
+                    <h1>Tan Limit</h1></div>
+                
+                <div class="problem-content">
+                    <p>Define</p>
+
+                    <p>$$t(n) = \int_{0}^{\pi/4} \tan^{2n}(x)\, dx.$$</p>
+
+                    <p>It turns out $t(5)$ can be written as $\dfrac{a}{b} - \dfrac{\pi}{4}$ for coprime positive integers $a, b$. Find $b - a$.</p>
+                </div>
+
+                <details class="problem-solution">
+                    <summary>Solution</summary>
+                    <div class="problem-solution-body">
+                        <p>Split off $\tan^{2}(x) = \sec^{2}(x) - 1$:</p>
+
+                        <p>$$t(n) = \int_{0}^{\pi/4} \sec^{2}(x)\tan^{2(n-1)}(x)\, dx - t(n-1).$$</p>
+
+                        <p>The first integral evaluates via $u = \tan x$ to $\dfrac{1}{2n - 1}$, so we get the recurrence $t(n) = \dfrac{1}{2n-1} - t(n-1)$ with $t(1) = 1 - \tfrac{\pi}{4}$. Telescoping yields</p>
+
+                        <p>$$t(5) = 1 - \tfrac{1}{3} + \tfrac{1}{5} - \tfrac{1}{7} + \tfrac{1}{9} - \tfrac{\pi}{4} = \tfrac{263}{315} - \tfrac{\pi}{4}.$$</p>
+
+                        <p>Since $\gcd(263, 315) = 1$, we have $a = 263$ and $b = 315$, giving $b - a = 52$.</p>
+
+                        <p class="answer">Answer: <strong>$52$</strong></p>
+                    </div>
+                    <div class="problem-notes">
+                        <h4>Notes</h4>
+                        <p>—</p>
+                    </div>
+                </details>
+        </div>
+    </main>
+</div>
+</body>
+</html>

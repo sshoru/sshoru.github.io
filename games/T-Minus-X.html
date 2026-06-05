@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T Minus X - Akhoury Shauryam</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../script.js"></script>
+
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Akhoury Shauryam</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html">Home</a>
+            <a href="../experience.html">Experience</a>
+            <a href="../research.html">Research</a>
+            <a href="../problems.html">Problem Archive</a>
+            <a href="../more.html" class="active">More</a>
+        </nav>
+        <div class="sidebar-foot">
+            <div class="social">
+                <a href="https://github.com/Satan-Claws" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/akhoury-shauryam-a87195221/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <button class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span class="label">Dark mode</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="backdrop"></div>
+
+    <main class="main">
+        <header class="topbar">
+            <h1>T Minus X</h1>
+            <button class="nav-toggle" type="button" aria-label="Open menu">☰</button>
+        </header>
+
+        <div class="container wide">
+            <a href="../gamedev.html" class="back-link">← Back</a>
+            <h1>T-Minus-X</h1>
+            <p class="game-subtitle"><a href="https://shauryam.itch.io/t-minus-x" target="_blank" rel="noopener">shauryam.itch.io/t-minus-x</a></p>
+            <a href="t-minus-x/index.html" target="_blank" class="game-fullscreen-button">
+                <i class="fas fa-expand"></i> Open Fullscreen
+            </a>
+        </div>
+
+        <div class="game-center-block">
+            <div class="game-fit">
+                <iframe
+                    src="t-minus-x/index.html"
+                    data-native-width="1366"
+                    data-native-height="768"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+        <div class="game-center-block">
+            <div class="game-description">
+                <img src="../assets/games/t-minus-x-banner.gif" alt="T-Minus-X gameplay">
+                <p>"T minus X seconds till self destruction on a space ship out of control, with artificial gravity out of control, along with a gun that too is out of control."</p>
+                <p>Any bugs are intentional and match the theme.</p>
+                <h3>Controls</h3>
+                <ul>
+                    <li><strong>Move:</strong> WASD / arrow keys</li>
+                    <li><strong>Shoot:</strong> left mouse</li>
+                    <li><strong>Melee:</strong> right mouse</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container wide">
+            <hr class="short-rule">
+            <div class="game-meta">
+                <p>My entry for the GMTK Game Jam 2020 — theme: "Out of Control".</p>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

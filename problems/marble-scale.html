@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marble Scale - Problem Archive</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../script.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Akhoury Shauryam</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html">Home</a>
+            <a href="../experience.html">Experience</a>
+            <a href="../research.html">Research</a>
+            <a href="../problems.html" class="active">Problem Archive</a>
+            <a href="../more.html">More</a>
+        </nav>
+        <div class="sidebar-foot">
+            <div class="social">
+                <a href="https://github.com/Satan-Claws" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/akhoury-shauryam-a87195221/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <button class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span class="label">Dark mode</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="backdrop"></div>
+
+    <main class="main">
+        <header class="topbar">
+            <h1>Marble Scale</h1>
+            <button class="nav-toggle" type="button" aria-label="Open menu">☰</button>
+        </header>
+
+        <div class="container">
+            <a href="../problems.html" class="back-link">← Back</a>
+
+                <div class="problem-header">
+                    <h1>Marble Scale</h1></div>
+                
+                <div class="problem-content">
+                    <p>Given a weighing scale that indicates the relationship $(<, >, =)$ between weights placed on both sides:</p>
+                    
+                    <p>Your task is to identify the weight of a marble with an unknown integer weight within the range $[1, n]$.</p>
+                    
+                    <p>Using the scale, you can choose your own set of integer dummy weights to compare and identify the marble's weight. Determine the smallest set of dummy weights needed to accurately determine the marble's weight.</p>
+                </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

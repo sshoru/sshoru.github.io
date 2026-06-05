@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience · Akhoury Shauryam</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js"></script>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Akhoury Shauryam</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html">Home</a>
+            <a href="experience.html" class="active">Experience</a>
+            <a href="research.html">Research</a>
+            <a href="problems.html">Problem Archive</a>
+            <a href="more.html">More</a>
+        </nav>
+        <div class="sidebar-foot">
+            <div class="social">
+                <a href="https://github.com/Satan-Claws" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/akhoury-shauryam-a87195221/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <button class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span class="label">Dark mode</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="backdrop"></div>
+
+    <main class="main">
+        <header class="topbar">
+            <h1>Experience</h1>
+            <button class="nav-toggle" type="button" aria-label="Open menu">☰</button>
+        </header>
+
+        <div class="container mid">
+            <h1 class="page-title">Experience</h1>
+            <p class="page-lede">Roles I've held, most recent first.</p>
+
+            <div class="entries">
+                <div class="entry">
+                    <div class="entry-date">Dec 2024 – present</div>
+                    <div class="entry-body">
+                        <h3><a href="https://lyric.tech/" target="_blank" rel="noopener">Lyric</a></h3>
+                        <h4>Operations Research Scientist</h4>
+                        <ul>
+                            <li>Network Science Team.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-date">Mar 2024 – Nov 2024</div>
+                    <div class="entry-body">
+                        <h3>True Beacon</h3>
+                        <h4>Quantitative Research Intern</h4>
+                        <ul>
+                            <li>Factor model research for Indian markets.</li>
+                            <li>Validated and refined portfolio-management models using ML and statistics.</li>
+                            <li>Built an algorithm to pick mutual funds and recreate them using low-cost indices.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-date">Feb 2023 – Jun 2023</div>
+                    <div class="entry-body">
+                        <h3>Trumpf Metamation</h3>
+                        <h4>Project Intern</h4>
+                        <ul>
+                            <li>Tuned robot precision using image-processing edge detection on metal sheets (MATLAB, OpenCV).</li>
+                            <li>Wrote Raspberry Pi code so the robot picks sheets at the correct position and orientation.</li>
+                            <li>Detected QR-like marks on sheets to compute height and bend angle.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-date">Dec 2022 – Feb 2023</div>
+                    <div class="entry-body">
+                        <h3>AlgoLabs</h3>
+                        <h4>Machine Learning Intern</h4>
+                        <ul>
+                            <li>Used OpenAI Whisper for video ASR / captioning, with pipelines for auto-testing accuracy on pre-captioned videos.</li>
+                            <li>Built an invoice image-to-data model with labels using PyTesseract and LayoutLMv3.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-date">Aug 2022 – Nov 2023</div>
+                    <div class="entry-body">
+                        <h3>XKDR Forum</h3>
+                        <h4>Julia Dev Intern</h4>
+                        <ul>
+                            <li>Contributed to <code>NISTTests.jl</code> for assessing the precision of linear regression models.</li>
+                            <li>Wrote R and Julia functions to compute and compare model outputs against certified data — source, docs, and tests.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-date">Jun 2022 – Aug 2022</div>
+                    <div class="entry-body">
+                        <h3>Galaxy Project: Nordic Earth System</h3>
+                        <h4>Summer Intern</h4>
+                        <ul>
+                            <li>Built a visualization tool using Python, XML, and Planemo.</li>
+                            <li>Analyzed monthly satellite data (MEERA, GLDAS) — time-series, CSV, animated cartographic projections; analyzed Landsat-8 for regional NDVI.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="proc-art strip" aria-hidden="true">
+            <canvas id="proc-stitch"></canvas>
+        </div>
+    </main>
+</div>
+<script src="assets/proc-art/stitch.js" defer></script>
+</body>
+</html>

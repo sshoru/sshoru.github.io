@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding and Subtracting - Problem Archive</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../script.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Akhoury Shauryam</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html">Home</a>
+            <a href="../experience.html">Experience</a>
+            <a href="../research.html">Research</a>
+            <a href="../problems.html" class="active">Problem Archive</a>
+            <a href="../more.html">More</a>
+        </nav>
+        <div class="sidebar-foot">
+            <div class="social">
+                <a href="https://github.com/Satan-Claws" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/akhoury-shauryam-a87195221/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <button class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span class="label">Dark mode</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="backdrop"></div>
+
+    <main class="main">
+        <header class="topbar">
+            <h1>Adding and Subtracting</h1>
+            <button class="nav-toggle" type="button" aria-label="Open menu">☰</button>
+        </header>
+
+        <div class="container">
+            <a href="../problems.html" class="back-link">← Back</a>
+
+                <div class="problem-header">
+                    <h1>Adding and Subtracting</h1></div>
+                
+                <div class="problem-content">
+                    <p>Define a sequence of non-negative integers $\{S_n\}$ by $S_1 = 1$ and, for $n \geq 2$,</p>
+
+                    <p>$$S_n = \begin{cases} S_{n-1} + n & \text{if } S_{n-1} < n \\ S_{n-1} - n & \text{if } S_{n-1} \geq n \end{cases}$$</p>
+
+                    <p>So you keep adding $n$ until the running total is at least $n$, then start subtracting. The first few values are $S_1 = 1$, $S_2 = 3$, $S_3 = 0$, and so on.</p>
+
+                    <p>Let $C_k$ be the (increasing) sequence of indices where $S_n$ hits zero, i.e. $S_{C_k} = 0$. What is $C_7$?</p>
+                </div>
+
+                <details class="problem-solution">
+                    <summary>Solution</summary>
+                    <div class="problem-solution-body">
+                        <p>Suppose $S_a = 0$ for some index $a$. Walking the recurrence forward, the sequence alternates between large and small values, and the next zero appears at index $3a + 3$. So the gaps form a recurrence $C_{k+1} = 3 C_k + 3$ with $C_1 = 3$.</p>
+
+                        <p>Solving the recurrence gives $C_k = \dfrac{3^{k+1} - 3}{2}$, so</p>
+
+                        <p>$$C_7 = \frac{3^{8} - 3}{2} = \frac{6561 - 3}{2} = 3279.$$</p>
+
+                        <p class="answer">Answer: <strong>$3279$</strong></p>
+                    </div>
+                    <div class="problem-notes">
+                        <h4>Notes</h4>
+                        <p>—</p>
+                    </div>
+                </details>
+        </div>
+    </main>
+</div>
+</body>
+</html>

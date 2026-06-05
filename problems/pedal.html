@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedal's Pedal - Problem Archive</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../script.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Akhoury Shauryam</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html">Home</a>
+            <a href="../experience.html">Experience</a>
+            <a href="../research.html">Research</a>
+            <a href="../problems.html" class="active">Problem Archive</a>
+            <a href="../more.html">More</a>
+        </nav>
+        <div class="sidebar-foot">
+            <div class="social">
+                <a href="https://github.com/Satan-Claws" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/akhoury-shauryam-a87195221/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <button class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span class="label">Dark mode</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="backdrop"></div>
+
+    <main class="main">
+        <header class="topbar">
+            <h1>Pedal's Pedal</h1>
+            <button class="nav-toggle" type="button" aria-label="Open menu">☰</button>
+        </header>
+
+        <div class="container">
+            <a href="../problems.html" class="back-link">← Back</a>
+
+                <div class="problem-header">
+                    <h1>Pedal's Pedal</h1></div>
+                
+                <div class="problem-content">
+                    <p>For a triangle $\Delta$, let $P_1$ be its orthic (pedal) triangle — the triangle whose vertices are the feet of the altitudes — and let $P_{n+1}$ be the orthic triangle of $P_n$.</p>
+
+                    <p>Call $\Delta$ <em>P-similar</em> if it is similar to at least one of $P_1, P_2, P_3, \ldots$.</p>
+
+                    <p>How many triples $(a, b, c)$ of positive integers (angles in degrees) with $a \leq b \leq c$ and $a + b + c = 180$ produce a P-similar triangle?</p>
+                </div>
+
+                <details class="problem-solution">
+                    <summary>Solution</summary>
+                    <div class="problem-solution-body">
+                        <p>If $\Delta$ has angles $a, b, c$ with $a \leq b \leq c$, the orthic triangle's angles are $180^\circ - 2a,\ 180^\circ - 2b,\ 180^\circ - 2c$ when $\Delta$ is acute, and $2a,\ 2b,\ 2c - 180^\circ$ when it is obtuse (no orthic triangle exists for right triangles).</p>
+
+                        <p>Each iteration doubles whatever factor of $2$ already divides the angles, so after two steps every angle of $P_n$ is a multiple of $4$. Therefore a P-similar triangle with integer angles must itself have all angles divisible by $4$, i.e. the angles are $4a, 4b, 4c$ with $a + b + c = 45$.</p>
+
+                        <p>On this restricted set, the orthic-map is a bijection from the set of triples to itself, so iterating it eventually cycles back — meaning every such triangle is P-similar. The count therefore reduces to enumerating integer triples $(a, b, c)$ with $a \leq b \leq c$ and $a + b + c = 45$:</p>
+
+                        <p>$$\sum_{a=1}^{15} \left( \left\lfloor \frac{45 - 3a}{2} \right\rfloor + 1 \right) = 169.$$</p>
+
+                        <p class="answer">Answer: <strong>$169$</strong></p>
+                    </div>
+                    <div class="problem-notes">
+                        <h4>Notes</h4>
+                        <p>—</p>
+                    </div>
+                </details>
+        </div>
+    </main>
+</div>
+</body>
+</html>

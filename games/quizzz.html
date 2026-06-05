@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzz - Akhoury Shauryam</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ===== HIDE GLOBAL PAGE CHROME ===== */
+        body.play-mode .header,
+        body.play-mode .navigation { display: none !important; }
+
+        body.play-mode .main-content {
+            margin: 0 auto;
+            padding: 0;
+            max-width: 100%;
+            width: 100%;
+        }
+
+        /* ===== LAYOUT ===== */
+        .game-wrapper {
+            min-height: 100vh;
+            padding: 1.25rem 1.25rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ===== SETUP SCREEN ===== */
+        #setup-screen {
+            max-width: 760px;
+            width: 100%;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+            transition: color 0.15s;
+        }
+        .back-link:hover { color: #e6c619; }
+
+        .q-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(4rem, 14vw, 7rem);
+            color: #e6c619;
+            text-shadow: 4px 4px 0 #000, -2px -2px 0 #00007a;
+            text-align: center;
+            letter-spacing: 0.06em;
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+
+        .q-subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .setup-card {
+            background: #252527;
+            border: 1px solid #3a3a3c;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .setup-card h3 {
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 1rem;
+        }
+
+        /* Dropzone */
+        .dropzone {
+            border: 2px dashed #4a4a4c;
+            border-radius: 8px;
+            padding: 1.75rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            user-select: none;
+        }
+
+        .dropzone:hover,
+        .dropzone.dragover {
+            border-color: #e6c619;
+            background: rgba(230, 198, 25, 0.05);
+        }
+
+        .dropzone i {
+            font-size: 1.75rem;
+            color: #e6c619;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropzone p {
+            color: #ccc;
+            font-size: 0.875rem;
+        }
+
+        .dropzone .loaded-name {
+            color: #e6c619;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        #file-input, #img-input { display: none; }
+
+        .format-hint {
+            background: rgba(0,0,0,0.4);
+            border-radius: 6px;
+            padding: 0.875rem 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.78rem;
+            line-height: 1.8;
+            color: #999;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .fh-comment { color: #555; }
+        .fh-key     { color: #e6c619; }
+        .fh-val     { color: #7de87d; }
+        .fh-sep     { color: #ddd; }
+
+        /* Image uploads */
+        .img-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .img-row span {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .img-row code {
+            color: #e6c619;
+            background: rgba(230,198,25,0.1);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+
+        .img-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .img-chip {
+            background: rgba(6,0,171,0.3);
+            border: 1px solid #0600ab;
+            border-radius: 6px;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.75rem;
+            color: #e6c619;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .img-chip button {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.7rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .img-chip button:hover { color: #e74c3c; }
+
+        /* Teams */
+        .team-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.875rem;
+        }
+
+        .q-input {
+            flex: 1;
+            background: #1a1a1c;
+            border: 1px solid #4a4a4c;
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            color: #fff;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .q-input:focus { border-color: #e6c619; }
+        .q-input::placeholder { color: #666; }
+
+        .teams-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            min-height: 1.5rem;
+        }
+
+        .team-tag {
+            background: rgba(6,0,171,0.3);
+            border: 1px solid #0600ab;
+            border-radius: 20px;
+            padding: 0.3rem 0.5rem 0.3rem 0.875rem;
+            color: #e6c619;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .team-tag button {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.7rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .team-tag button:hover { color: #e74c3c; }
+
+        /* Buttons */
+        .btn {
+            padding: 0.55rem 1.05rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn-gold    { background: #e6c619; color: #111; }
+        .btn-gold:hover:not(:disabled) { background: #ffd700; }
+        .btn-gold:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+        .btn-outline { background: transparent; color: #ccc; border: 1px solid #4a4a4c; }
+        .btn-outline:hover { background: #2a2a2c; color: #fff; }
+
+        .btn-green   { background: #1a7a1a; color: #fff; }
+        .btn-green:hover { background: #1f9a1f; }
+
+        .btn-red     { background: #7a1a1a; color: #fff; }
+        .btn-red:hover { background: #9a1f1f; }
+
+        .btn-blue    { background: #1a4a8a; color: #fff; }
+        .btn-blue:hover { background: #2257a8; }
+
+        .btn-sm { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
+        .btn-lg { padding: 0.85rem 1.6rem; font-size: 1.05rem; }
+
+        .start-btn {
+            width: 100%;
+            padding: 0.95rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.04em;
+            border-radius: 8px;
+        }
+
+        /* ===== GAME SCREEN ===== */
+        #game-screen {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1700px;
+        }
+
+        .game-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.85rem;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .game-topbar .q-title {
+            font-size: clamp(2.25rem, 6vw, 4rem);
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        .topbar-btns { display: flex; gap: 0.5rem; }
+
+        /* ===== TURN INDICATOR ===== */
+        .turn-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background: linear-gradient(90deg, rgba(6,0,171,0.5), rgba(230,198,25,0.15), rgba(6,0,171,0.5));
+            border: 2px solid #0600ab;
+            border-radius: 10px;
+            padding: 0.7rem 1.25rem;
+            margin-bottom: 0.85rem;
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+        }
+        .turn-indicator .ti-team {
+            color: #e6c619;
+            text-shadow: 2px 2px 0 #000, -1px -1px 0 #00007a;
+        }
+        .turn-indicator i { color: #e6c619; }
+
+        /* ===== BOARD ===== */
+        .board-scroll { overflow-x: auto; width: 100%; }
+
+        .board {
+            display: grid;
+            gap: 3px;
+            background: #000;
+            border: 3px solid #000;
+            border-radius: 4px;
+            overflow: hidden;
+            min-width: 360px;
+            width: 100%;
+        }
+
+        .cell {
+            background: #060CE9;
+            padding: 0.85rem 0.6rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 110px;
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+        }
+
+        .cell.cat {
+            background: #000a8e;
+            min-height: 90px;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        .cat-label {
+            color: #fff;
+            font-size: clamp(0.85rem, 1.7vw, 1.15rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .cell.pt {
+            cursor: pointer;
+            transition: background 0.1s, box-shadow 0.2s;
+        }
+
+        .cell.pt:hover:not(.used) { background: #1a22ff; }
+
+        .pt-label {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(1.5rem, 3.4vw, 2.8rem);
+            color: #e6c619;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+        }
+
+        .cell.used { background: #020310; cursor: default; }
+        .cell.used .pt-label { visibility: hidden; }
+
+        /* Highlighted = opened but not answered */
+        .cell.pt.highlighted {
+            background: #1a22ff;
+            box-shadow: inset 0 0 0 4px #e6c619, 0 0 16px rgba(230,198,25,0.55);
+            animation: highlightPulse 1.6s ease-in-out infinite;
+        }
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: inset 0 0 0 4px #e6c619, 0 0 14px rgba(230,198,25,0.45); }
+            50%      { box-shadow: inset 0 0 0 4px #fff37a, 0 0 22px rgba(230,198,25,0.85); }
+        }
+
+        /* ===== SCORES ===== */
+        .score-bar {
+            display: flex;
+            gap: 0.7rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .score-card {
+            background: #252527;
+            border: 2px solid #0600ab;
+            border-radius: 10px;
+            padding: 0.7rem 1.35rem;
+            text-align: center;
+            min-width: 130px;
+            transition: border-color 0.3s, transform 0.15s, opacity 0.15s;
+            cursor: grab;
+            user-select: none;
+        }
+        .score-card:active { cursor: grabbing; }
+        .score-card.dragging { opacity: 0.5; }
+        .score-card.drag-over { border-color: #e6c619 !important; transform: scale(1.04); }
+
+        .score-card .sc-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #aaa;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+        }
+        .score-card .sc-name .turn-dot {
+            display: none;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e6c619;
+            box-shadow: 0 0 6px #e6c619;
+        }
+        .score-card.current-turn .sc-name .turn-dot { display: inline-block; }
+        .score-card.current-turn {
+            border-color: #e6c619;
+            box-shadow: 0 0 14px rgba(230,198,25,0.45);
+        }
+        .score-card.current-turn .sc-name { color: #e6c619; }
+
+        .score-card .sc-val {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.9rem;
+            color: #e6c619;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            line-height: 1;
+            transition: transform 0.25s;
+            cursor: pointer;
+        }
+        .score-card .sc-val:hover { filter: brightness(1.2); }
+        .score-card .sc-val.neg { color: #e74c3c; }
+        .score-card.flash-pos { border-color: #22bb22 !important; }
+        .score-card.flash-neg { border-color: #bb2222 !important; }
+
+        .score-hint {
+            text-align: center;
+            color: #666;
+            font-size: 0.72rem;
+            margin-top: 0.55rem;
+            font-style: italic;
+        }
+
+        /* ===== MODAL ===== */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.93);
+            z-index: 500;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .overlay.open { display: flex; }
+
+        .modal-card {
+            background: #060CE9;
+            border: 4px solid #0009bb;
+            border-radius: 14px;
+            padding: clamp(1.5rem, 4vw, 2.75rem);
+            max-width: 960px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 80px rgba(6,0,171,0.45);
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+
+        .m-cat {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #a8c8ff;
+            margin-bottom: 0.3rem;
+        }
+
+        .m-pts {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 4.25rem);
+            color: #e6c619;
+            text-shadow: 3px 3px 0 #000;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .m-pts .m-pts-orig {
+            font-size: 0.45em;
+            color: #ccc;
+            text-decoration: line-through;
+            margin-right: 0.5rem;
+            text-shadow: 1px 1px 0 #000;
+            vertical-align: middle;
+        }
+
+        .m-turn {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(1.2rem, 2.6vw, 1.85rem);
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+            padding: 0.55rem 1rem;
+            background: rgba(0,0,0,0.35);
+            border-radius: 8px;
+            border: 2px solid rgba(230,198,25,0.5);
+            display: inline-block;
+        }
+        .m-turn .m-turn-team {
+            color: #e6c619;
+            font-weight: 700;
+            text-shadow: 2px 2px 0 #000;
+        }
+        .m-turn i { color: #e6c619; margin-right: 0.4rem; }
+
+        .m-result {
+            background: rgba(0,0,0,0.45);
+            border-radius: 8px;
+            padding: 0.9rem 1.25rem;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: none;
+        }
+        .m-result.shown { display: block; }
+        .m-result.correct   { color: #7de87d; border: 2px solid #2a8a2a; }
+        .m-result.incorrect { color: #ff8a8a; border: 2px solid #8a2a2a; }
+
+        .m-question {
+            font-size: clamp(1.15rem, 2.7vw, 1.75rem);
+            color: #fff;
+            font-weight: 600;
+            line-height: 1.45;
+            margin-bottom: 1.25rem;
+        }
+
+        .m-question img {
+            max-width: 100%;
+            max-height: 340px;
+            border-radius: 8px;
+            margin: 0.75rem auto 0;
+            display: block;
+            object-fit: contain;
+        }
+
+        .m-answer {
+            background: rgba(0,0,0,0.35);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+            color: #e6c619;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: none;
+        }
+
+        .m-answer.shown { display: block; }
+
+        .m-actions {
+            display: flex;
+            gap: 0.7rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 0.4rem;
+        }
+
+        @media (max-width: 560px) {
+            .game-topbar { flex-direction: column; align-items: flex-start; }
+            .modal-card { border-width: 2px; }
+            .cell { min-height: 88px; }
+        }
+    </style>
+</head>
+<body class="play-mode">
+
+    <header class="header">
+        <div class="header-content">
+            <div class="logo"><h1>Akhoury Shauryam</h1></div>
+            <div class="social-links">
+                <a href="https://github.com/Satan-Claws" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/akhoury-shauryam-a87195221/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navigation">
+        <div class="nav-content">
+            <div id="playNav" class="nav-menu active">
+                <a href="../index.html#play" class="nav-link">Home</a>
+                <a href="../art.html" class="nav-link">Art</a>
+                <a href="../gamedev.html" class="nav-link active">GameDev</a>
+                <a href="../writeups.html" class="nav-link">Writeups</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="game-wrapper">
+
+            <!-- ===== SETUP ===== -->
+            <div id="setup-screen">
+                <a href="../gamedev.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to GameDev</a>
+                <div class="q-title">QUIZZZ</div>
+                <p class="q-subtitle">Upload a question file, add teams, and play</p>
+
+                <div class="setup-card">
+                    <h3>Questions File (.txt)</h3>
+                    <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+                        <input type="file" id="file-input" accept=".txt">
+                        <i class="fas fa-file-alt"></i>
+                        <p>Click or drag &amp; drop a .txt file</p>
+                        <div class="loaded-name" id="loaded-name"></div>
+                    </div>
+                    <div class="format-hint"><span class="fh-comment"># Each CATEGORY block has point-value questions separated from answers by |</span>
+
+<span class="fh-key">CATEGORY:</span> <span class="fh-val">Science</span>
+<span class="fh-val">100:</span> What is H₂O? <span class="fh-sep">|</span> Water
+<span class="fh-val">200:</span> Closest planet to the Sun? <span class="fh-sep">|</span> Mercury
+<span class="fh-val">300:</span> Chemical symbol for gold? <span class="fh-sep">|</span> Au
+<span class="fh-val">400:</span> What keeps planets in orbit? <span class="fh-sep">|</span> Gravity
+
+<span class="fh-key">CATEGORY:</span> <span class="fh-val">Pop Culture</span>
+<span class="fh-val">100:</span> <span class="fh-comment">[img:photo.jpg]</span> Name this film <span class="fh-sep">|</span> The Answer
+<span class="fh-val">200:</span> Who played Iron Man? <span class="fh-sep">|</span> Robert Downey Jr.</div>
+                </div>
+
+                <div class="setup-card">
+                    <h3>Images (optional)</h3>
+                    <div class="img-row">
+                        <input type="file" id="img-input" accept="image/*" multiple>
+                        <button class="btn btn-outline btn-sm" onclick="document.getElementById('img-input').click()">
+                            <i class="fas fa-image"></i> Upload Images
+                        </button>
+                        <span>Reference in questions as <code>[img:filename.jpg]</code></span>
+                    </div>
+                    <div class="img-strip" id="img-strip"></div>
+                </div>
+
+                <div class="setup-card">
+                    <h3>Teams (turn order)</h3>
+                    <div class="team-row">
+                        <input class="q-input" type="text" id="team-input" placeholder="Team name..." maxlength="24">
+                        <button class="btn btn-gold" onclick="addTeam()">Add</button>
+                    </div>
+                    <div class="teams-list" id="teams-list"></div>
+                </div>
+
+                <button class="btn btn-gold start-btn" id="start-btn" onclick="startGame()" disabled>
+                    Start Game
+                </button>
+            </div>
+
+            <!-- ===== GAME ===== -->
+            <div id="game-screen">
+                <div class="game-topbar">
+                    <div class="q-title">QUIZZZ</div>
+                    <div class="topbar-btns">
+                        <button class="btn btn-outline btn-sm" onclick="resetBoard()" title="Reset all tiles and scores">
+                            <i class="fas fa-sync-alt"></i> Reset Board
+                        </button>
+                        <button class="btn btn-outline btn-sm" onclick="newGame()">
+                            <i class="fas fa-home"></i> New Game
+                        </button>
+                    </div>
+                </div>
+
+                <div class="turn-indicator" id="turn-indicator">
+                    <i class="fas fa-microphone"></i>
+                    <span><span class="ti-team" id="ti-team">—</span>'s Turn</span>
+                </div>
+
+                <div class="board-scroll">
+                    <div class="board" id="board"></div>
+                </div>
+                <div class="score-bar" id="score-bar"></div>
+                <p class="score-hint">Drag team cards to reorder turns &middot; Double-click any score to edit it</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== MODAL ===== -->
+    <div class="overlay" id="overlay">
+        <div class="modal-card">
+            <div class="m-cat"  id="m-cat"></div>
+            <div class="m-pts"  id="m-pts"></div>
+            <div class="m-turn" id="m-turn">
+                <i class="fas fa-microphone"></i><span class="m-turn-team" id="m-turn-team">—</span>'s Turn
+            </div>
+            <div class="m-question" id="m-question"></div>
+            <div class="m-answer"   id="m-answer"></div>
+            <div class="m-result"   id="m-result"></div>
+
+            <div class="m-actions" id="m-actions-choice">
+                <button class="btn btn-green btn-lg" onclick="markCorrect()">
+                    <i class="fas fa-check"></i> Correct
+                </button>
+                <button class="btn btn-red btn-lg" onclick="markIncorrect()">
+                    <i class="fas fa-times"></i> Incorrect
+                </button>
+                <button class="btn btn-blue btn-lg" onclick="markPass()">
+                    <i class="fas fa-forward"></i> Pass
+                </button>
+            </div>
+
+            <div class="m-actions" id="m-actions-done" style="display:none;">
+                <button class="btn btn-gold btn-lg" onclick="closeModal()">
+                    <i class="fas fa-arrow-right"></i> Next
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let categories = [];
+    let teams      = [];
+    let imageMap   = new Map();
+    let activeQ    = null;
+    let currentTurnIndex = 0;
+    let draggedIdx = null;
+
+    // ---- File upload ----
+    const fileInput = document.getElementById('file-input');
+    const dropzone  = document.getElementById('dropzone');
+
+    fileInput.addEventListener('change', e => {
+        if (e.target.files[0]) loadTxt(e.target.files[0]);
+    });
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        const f = e.dataTransfer.files[0];
+        if (f && f.name.toLowerCase().endsWith('.txt')) loadTxt(f);
+    });
+
+    function loadTxt(file) {
+        const r = new FileReader();
+        r.onload = e => {
+            categories = parseTxt(e.target.result);
+            document.getElementById('loaded-name').textContent =
+                file.name + ' — ' + categories.length + ' categories';
+            checkReady();
+        };
+        r.readAsText(file);
+    }
+
+    function parseTxt(text) {
+        const cats = [];
+        let cur = null;
+        for (const raw of text.split('\n')) {
+            const line = raw.trim();
+            if (!line) continue;
+            if (/^CATEGORY:/i.test(line)) {
+                cur = { name: line.replace(/^CATEGORY:/i, '').trim(), questions: [] };
+                cats.push(cur);
+            } else if (cur) {
+                const m = line.match(/^(\d+):\s*(.+?)\s*\|\s*(.+)$/);
+                if (m) {
+                    const pts = +m[1];
+                    cur.questions.push({
+                        points: pts,
+                        value: pts,
+                        question: m[2].trim(),
+                        answer: m[3].trim(),
+                        used: false,
+                        opened: false,
+                        halved: false,
+                        starter: null,
+                        passed: []
+                    });
+                }
+            }
+        }
+        return cats;
+    }
+
+    // ---- Image upload ----
+    document.getElementById('img-input').addEventListener('change', e => {
+        for (const f of e.target.files) {
+            const r = new FileReader();
+            r.onload = ev => { imageMap.set(f.name, ev.target.result); renderImgStrip(); };
+            r.readAsDataURL(f);
+        }
+        e.target.value = '';
+    });
+
+    function renderImgStrip() {
+        document.getElementById('img-strip').innerHTML =
+            [...imageMap.keys()].map(name =>
+                '<div class="img-chip">' + esc(name) +
+                '<button onclick="removeImg(\'' + escAttr(name) + '\')" title="Remove"><i class="fas fa-times"></i></button>' +
+                '</div>'
+            ).join('');
+    }
+
+    function removeImg(name) { imageMap.delete(name); renderImgStrip(); }
+
+    // ---- Teams ----
+    const teamInput = document.getElementById('team-input');
+    teamInput.addEventListener('keydown', e => { if (e.key === 'Enter') addTeam(); });
+
+    function addTeam() {
+        const name = teamInput.value.trim();
+        if (!name || teams.find(t => t.name.toLowerCase() === name.toLowerCase())) return;
+        teams.push({ name, score: 0 });
+        teamInput.value = '';
+        renderTeams();
+        checkReady();
+    }
+
+    function removeTeam(i) { teams.splice(i, 1); renderTeams(); checkReady(); }
+
+    function renderTeams() {
+        document.getElementById('teams-list').innerHTML = teams.map((t, i) =>
+            '<div class="team-tag">' + (i + 1) + '. ' + esc(t.name) +
+            '<button onclick="removeTeam(' + i + ')"><i class="fas fa-times"></i></button></div>'
+        ).join('');
+    }
+
+    function checkReady() {
+        document.getElementById('start-btn').disabled = !(categories.length && teams.length);
+    }
+
+    // ---- Game flow ----
+    function startGame() {
+        categories.forEach(c => c.questions.forEach(q => {
+            q.used = false;
+            q.opened = false;
+            q.halved = false;
+            q.value = q.points;
+            q.starter = null;
+            q.passed = [];
+        }));
+        teams.forEach(t => { t.score = 0; });
+        currentTurnIndex = 0;
+        show('game');
+        renderBoard();
+        renderScores();
+        updateTurnDisplay();
+    }
+
+    function resetBoard() {
+        categories.forEach(c => c.questions.forEach(q => {
+            q.used = false;
+            q.opened = false;
+            q.halved = false;
+            q.value = q.points;
+            q.starter = null;
+            q.passed = [];
+        }));
+        teams.forEach(t => { t.score = 0; });
+        currentTurnIndex = 0;
+        renderBoard();
+        renderScores();
+        updateTurnDisplay();
+    }
+
+    function newGame() {
+        categories = []; teams = []; imageMap.clear();
+        currentTurnIndex = 0;
+        document.getElementById('loaded-name').textContent = '';
+        document.getElementById('img-strip').innerHTML = '';
+        document.getElementById('teams-list').innerHTML = '';
+        fileInput.value = '';
+        checkReady();
+        show('setup');
+    }
+
+    function show(which) {
+        document.getElementById('setup-screen').style.display = which === 'setup' ? '' : 'none';
+        document.getElementById('game-screen').style.display  = which === 'game'  ? 'flex' : 'none';
+    }
+
+    // ---- Turn ----
+    function currentTeam() { return teams[currentTurnIndex] || null; }
+
+    function updateTurnDisplay() {
+        const t = currentTeam();
+        const name = t ? t.name : '—';
+        document.getElementById('ti-team').textContent = name;
+        document.getElementById('m-turn-team').textContent = name;
+        // Highlight current-turn score card
+        document.querySelectorAll('.score-card').forEach((el, i) => {
+            el.classList.toggle('current-turn', i === currentTurnIndex);
+        });
+    }
+
+    // ---- Board ----
+    function pointVals() {
+        const s = new Set();
+        categories.forEach(c => c.questions.forEach(q => s.add(q.points)));
+        return [...s].sort((a, b) => a - b);
+    }
+
+    function renderBoard() {
+        const board = document.getElementById('board');
+        const pts   = pointVals();
+        board.style.gridTemplateColumns = 'repeat(' + categories.length + ', 1fr)';
+        board.innerHTML = '';
+
+        categories.forEach(cat => {
+            const cell = document.createElement('div');
+            cell.className = 'cell cat';
+            cell.innerHTML = '<span class="cat-label">' + esc(cat.name) + '</span>';
+            board.appendChild(cell);
+        });
+
+        pts.forEach(pv => {
+            categories.forEach(cat => {
+                const q    = cat.questions.find(q => q.points === pv);
+                const used = !q || q.used;
+                const cell = document.createElement('div');
+                let cls = 'cell pt';
+                if (used) cls += ' used';
+                else if (q.opened) cls += ' highlighted';
+                cell.className = cls;
+                cell.innerHTML = '<span class="pt-label">$' + pv + '</span>';
+                if (q && !used) cell.addEventListener('click', () => openModal(cat, q));
+                board.appendChild(cell);
+            });
+        });
+    }
+
+    // ---- Scores ----
+    function renderScores() {
+        const bar = document.getElementById('score-bar');
+        bar.innerHTML = teams.map((t, i) =>
+            '<div class="score-card" id="sc' + i + '" draggable="true" data-idx="' + i + '">' +
+              '<div class="sc-name"><span class="turn-dot"></span>' + esc(t.name) + '</div>' +
+              '<div class="sc-val' + (t.score < 0 ? ' neg' : '') + '" id="sv' + i + '" title="Double-click to edit">' + fmt(t.score) + '</div>' +
+            '</div>'
+        ).join('');
+
+        // Wire up listeners
+        bar.querySelectorAll('.score-card').forEach(card => {
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragover',  handleDragOver);
+            card.addEventListener('dragleave', handleDragLeave);
+            card.addEventListener('drop',      handleDrop);
+            card.addEventListener('dragend',   handleDragEnd);
+
+            const sv = card.querySelector('.sc-val');
+            const idx = +card.dataset.idx;
+            sv.addEventListener('dblclick', () => editScore(idx));
+        });
+    }
+
+    function fmt(n) { return (n < 0 ? '-$' : '$') + Math.abs(n).toLocaleString(); }
+
+    function bump(i, delta) {
+        if (i < 0 || i >= teams.length) return;
+        teams[i].score += delta;
+        const sv = document.getElementById('sv' + i);
+        const sc = document.getElementById('sc' + i);
+        if (sv) {
+            sv.className = 'sc-val' + (teams[i].score < 0 ? ' neg' : '');
+            sv.textContent = fmt(teams[i].score);
+            sv.title = 'Double-click to edit';
+            sv.style.transform = 'scale(1.4)';
+            setTimeout(() => { sv.style.transform = ''; }, 280);
+        }
+        if (sc) {
+            sc.classList.add(delta >= 0 ? 'flash-pos' : 'flash-neg');
+            setTimeout(() => sc.classList.remove('flash-pos', 'flash-neg'), 900);
+        }
+    }
+
+    function editScore(i) {
+        if (i < 0 || i >= teams.length) return;
+        const t = teams[i];
+        const v = prompt('Set score for ' + t.name + ':', t.score);
+        if (v === null) return;
+        const n = parseInt(v, 10);
+        if (!Number.isFinite(n)) return;
+        const delta = n - t.score;
+        t.score = n;
+        const sv = document.getElementById('sv' + i);
+        const sc = document.getElementById('sc' + i);
+        if (sv) {
+            sv.className = 'sc-val' + (t.score < 0 ? ' neg' : '');
+            sv.textContent = fmt(t.score);
+        }
+        if (sc && delta !== 0) {
+            sc.classList.add(delta > 0 ? 'flash-pos' : 'flash-neg');
+            setTimeout(() => sc.classList.remove('flash-pos', 'flash-neg'), 900);
+        }
+    }
+
+    // ---- Drag & drop reorder ----
+    function handleDragStart(e) {
+        draggedIdx = +e.currentTarget.dataset.idx;
+        e.currentTarget.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        // Firefox requires data to be set
+        try { e.dataTransfer.setData('text/plain', String(draggedIdx)); } catch (_) {}
+    }
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        e.currentTarget.classList.add('drag-over');
+    }
+    function handleDragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+    function handleDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('drag-over');
+        const targetIdx = +e.currentTarget.dataset.idx;
+        if (draggedIdx === null || draggedIdx === targetIdx) return;
+        const liveTeam = teams[currentTurnIndex];
+        const [moved]  = teams.splice(draggedIdx, 1);
+        teams.splice(targetIdx, 0, moved);
+        currentTurnIndex = teams.indexOf(liveTeam);
+        if (currentTurnIndex < 0) currentTurnIndex = 0;
+        draggedIdx = null;
+        renderScores();
+        updateTurnDisplay();
+    }
+    function handleDragEnd() {
+        document.querySelectorAll('.score-card.drag-over, .score-card.dragging')
+            .forEach(el => el.classList.remove('drag-over', 'dragging'));
+        draggedIdx = null;
+    }
+
+    // ---- Modal ----
+    function openModal(cat, q) {
+        activeQ = { cat, q };
+        if (q.starter === null) {
+            q.starter = currentTurnIndex;
+            q.passed = [];
+        }
+        q.opened = true;
+        renderBoard();
+
+        document.getElementById('m-cat').textContent = cat.name;
+        const ptsEl = document.getElementById('m-pts');
+        if (q.halved) {
+            ptsEl.innerHTML = '<span class="m-pts-orig">$' + q.points + '</span>$' + q.value;
+        } else {
+            ptsEl.textContent = '$' + q.value;
+        }
+        document.getElementById('m-question').innerHTML = renderQ(q.question);
+        const ans = document.getElementById('m-answer');
+        ans.textContent = q.answer;
+        ans.classList.remove('shown');
+        const res = document.getElementById('m-result');
+        res.classList.remove('shown', 'correct', 'incorrect');
+        res.textContent = '';
+        document.getElementById('m-turn').style.display = '';
+
+        // Show choice buttons, hide done button
+        document.getElementById('m-actions-choice').style.display = '';
+        document.getElementById('m-actions-done').style.display   = 'none';
+
+        updateTurnDisplay();
+        document.getElementById('overlay').classList.add('open');
+    }
+
+    function renderQ(text) {
+        return text.split(/(\[img:[^\]]+\])/gi).map(part => {
+            const m = part.match(/^\[img:([^\]]+)\]$/i);
+            if (!m) return '<span>' + esc(part) + '</span>';
+            const ref = m[1].trim();
+            const src = imageMap.get(ref) || (/^https?:\/\//i.test(ref) ? ref : null);
+            return src
+                ? '<img src="' + escAttr(src) + '" alt="question image" onerror="this.style.display=\'none\'">'
+                : '<span style="color:#f88;font-size:0.85em">[img not found: ' + esc(ref) + ']</span>';
+        }).join('');
+    }
+
+    function showDoneState() {
+        document.getElementById('m-actions-choice').style.display = 'none';
+        document.getElementById('m-actions-done').style.display   = '';
+        document.getElementById('m-turn').style.display = 'none';
+    }
+
+    function nextStarter(q) {
+        if (!teams.length) return 0;
+        const base = q.starter == null ? currentTurnIndex : q.starter;
+        return (base + 1) % teams.length;
+    }
+
+    function markCorrect() {
+        if (!activeQ) return;
+        const q = activeQ.q;
+        const team = currentTeam();
+        const gain = q.value;
+        bump(currentTurnIndex, gain);
+        q.used = true;
+        q.opened = false;
+        // Reveal answer
+        document.getElementById('m-answer').classList.add('shown');
+        const res = document.getElementById('m-result');
+        res.textContent = '✓ Correct — ' + (team ? team.name : '') + ' gains $' + gain;
+        res.classList.remove('incorrect');
+        res.classList.add('shown', 'correct');
+        showDoneState();
+        renderBoard();
+        currentTurnIndex = nextStarter(q);
+        updateTurnDisplay();
+    }
+
+    function markIncorrect() {
+        if (!activeQ) return;
+        const q = activeQ.q;
+        const team = currentTeam();
+        const penalty = Math.round(q.value / 2);
+        bump(currentTurnIndex, -penalty);
+        q.used = true;
+        q.opened = false;
+        // Do NOT reveal answer on wrong
+        const res = document.getElementById('m-result');
+        res.textContent = '✗ Incorrect — ' + (team ? team.name : '') + ' loses $' + penalty;
+        res.classList.remove('correct');
+        res.classList.add('shown', 'incorrect');
+        showDoneState();
+        renderBoard();
+        currentTurnIndex = nextStarter(q);
+        updateTurnDisplay();
+    }
+
+    function markPass() {
+        if (!activeQ) return;
+        const q = activeQ.q;
+        if (!q.halved) {
+            q.value = Math.round(q.value / 2);
+            q.halved = true;
+        }
+        if (!q.passed.includes(currentTurnIndex)) q.passed.push(currentTurnIndex);
+
+        // If every team has passed, the question ends: reveal answer, advance to starter+1
+        if (q.passed.length >= teams.length) {
+            q.used = true;
+            q.opened = false;
+            document.getElementById('m-answer').classList.add('shown');
+            const res = document.getElementById('m-result');
+            res.textContent = '— All teams passed — answer revealed';
+            res.classList.remove('correct', 'incorrect');
+            res.classList.add('shown');
+            showDoneState();
+            renderBoard();
+            currentTurnIndex = nextStarter(q);
+            updateTurnDisplay();
+            return;
+        }
+
+        // Otherwise: advance to the next team that hasn't passed yet
+        let next = (currentTurnIndex + 1) % teams.length;
+        let guard = 0;
+        while (q.passed.includes(next) && guard++ < teams.length) {
+            next = (next + 1) % teams.length;
+        }
+        currentTurnIndex = next;
+        updateTurnDisplay();
+
+        // Refresh modal to show new value + new team
+        const ptsEl = document.getElementById('m-pts');
+        if (q.halved) {
+            ptsEl.innerHTML = '<span class="m-pts-orig">$' + q.points + '</span>$' + q.value;
+        } else {
+            ptsEl.textContent = '$' + q.value;
+        }
+    }
+
+    function closeModal() {
+        // Closing without answering = leave question highlighted (not used).
+        document.getElementById('overlay').classList.remove('open');
+        activeQ = null;
+    }
+
+    document.getElementById('overlay').addEventListener('click', e => {
+        if (e.target === document.getElementById('overlay')) closeModal();
+    });
+
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('overlay').classList.contains('open')) return;
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // ---- Utils ----
+    function esc(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    function escAttr(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    }
+    </script>
+
+    <script src="../play-script.js"></script>
+</body>
+</html>
